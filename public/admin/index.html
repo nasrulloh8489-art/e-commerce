@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Админка — NovaTrend</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin">
+
+<!-- Вход -->
+<div class="login" id="login">
+  <form class="login-box" id="loginForm">
+    <div class="logo">Nova<b>Trend</b></div>
+    <p>Панель управления магазином</p>
+    <input class="input" type="password" id="pass" placeholder="Пароль администратора" autocomplete="current-password" required>
+    <div class="form-error" id="loginErr"></div>
+    <button class="btn btn-dark btn-block">Войти</button>
+  </form>
+</div>
+
+<!-- Панель -->
+<div class="app" id="app" hidden>
+  <aside class="side">
+    <div class="logo">Nova<b>Trend</b></div>
+    <nav>
+      <button class="tab active" data-tab="orders" data-icon="bag">Заказы <span class="pill" id="newCount"></span></button>
+      <button class="tab" data-tab="products" data-icon="tag">Товары</button>
+      <button class="tab" data-tab="settings" data-icon="store">Настройки</button>
+    </nav>
+    <div class="side-foot">
+      <a href="/" target="_blank" class="tab" data-icon="globe">Открыть сайт</a>
+      <button class="tab" id="logout" data-icon="close">Выйти</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- ЗАКАЗЫ -->
+    <section data-view="orders">
+      <div class="top">
+        <h1>Заказы</h1>
+        <div class="top-actions">
+          <label class="check"><input type="checkbox" id="autoRefresh" checked> Автообновление</label>
+          <button class="btn btn-outline btn-sm" id="reload" data-icon="refresh">Обновить</button>
+        </div>
+      </div>
+      <div class="kpis" id="kpis"></div>
+      <div class="toolbar">
+        <div class="chips" id="statusChips"></div>
+        <input class="input search" id="orderSearch" placeholder="Поиск: номер, имя, телефон">
+      </div>
+      <div class="orders" id="orders"></div>
+    </section>
+
+    <!-- ТОВАРЫ -->
+    <section data-view="products" hidden>
+      <div class="top">
+        <h1>Товары</h1>
+        <div class="top-actions">
+          <button class="btn btn-dark btn-sm" id="addProduct" data-icon="plus">Добавить товар</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="table" id="productsTable">
+          <thead><tr><th></th><th>Название</th><th>Категория</th><th>Цена</th><th>Метка</th><th>На сайте</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- НАСТРОЙКИ -->
+    <section data-view="settings" hidden>
+      <div class="top"><h1>Настройки</h1></div>
+      <form class="panel" id="settingsForm">
+        <h2>Магазин и доставка</h2>
+        <div class="fields">
+          <div class="field"><label>Название магазина</label><input class="input" name="storeName"></div>
+          <div class="field"><label>Валюта (символ)</label><input class="input" name="currency" maxlength="4"></div>
+          <div class="field"><label>Стоимость курьерской доставки</label><input class="input" name="courierPrice" type="number" step="0.01" min="0"></div>
+          <div class="field"><label>Бесплатная доставка от суммы (0 — выкл.)</label><input class="input" name="freeShippingFrom" type="number" step="0.01" min="0"></div>
+          <div class="field full"><label>Адрес самовывоза</label><input class="input" name="pickupAddress"></div>
+          <div class="field"><label>Телефон магазина</label><input class="input" name="storePhone"></div>
+          <div class="field"><label>WhatsApp магазина (только цифры с кодом страны)</label><input class="input" name="storeWhatsapp" placeholder="79001234567"></div>
+          <div class="field"><label>Окончание распродажи (таймер)</label><input class="input" name="flashSaleEnds" type="datetime-local"></div>
+        </div>
+        <button class="btn btn-dark" style="margin-top:18px">Сохранить</button>
+      </form>
+    </section>
+  </main>
+</div>
+
+<!-- Карточка заказа -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer wide" id="orderDrawer">
+  <div class="drawer-head"><h3 id="odTitle">Заказ</h3><button class="icon-btn" data-close-drawer data-icon="close" aria-label="Закрыть"></button></div>
+  <div class="drawer-body" id="odBody"></div>
+</aside>
+
+<!-- Редактор товара -->
+<div class="modal" id="productEditor" role="dialog" aria-modal="true">
+  <form class="modal-box editor" id="productForm">
+    <button type="button" class="modal-close" data-close-editor aria-label="Закрыть" data-icon="close"></button>
+    <div class="pic"><img id="pePreview" alt=""></div>
+    <div class="info">
+      <h2 id="peTitle">Товар</h2>
+      <div class="field"><label>Название *</label><input class="input" name="name" required></div>
+      <div class="fields">
+        <div class="field"><label>Цена *</label><input class="input" name="price" type="number" step="0.01" min="0" required></div>
+        <div class="field"><label>Старая цена</label><input class="input" name="oldPrice" type="number" step="0.01" min="0"></div>
+        <div class="field"><label>Категория</label><select class="input" name="category" id="peCategory"></select></div>
+        <div class="field"><label>Метка</label><select class="input" name="badge"><option value="">Нет</option><option value="new">Новинка</option><option value="hit">Хит</option></select></div>
+      </div>
+      <div class="field"><label>Ссылка на фото</label><input class="input" name="image" placeholder="https://…"></div>
+      <div class="field"><label>Размеры через запятую</label><input class="input" name="sizes" placeholder="S, M, L, XL"></div>
+      <div class="field">
+        <label>Описание</label>
+        <textarea class="input" name="description" placeholder="Можно написать пару фактов (например: хлопок 100%, оверсайз) — AI превратит их в описание"></textarea>
+        <button type="button" class="btn btn-outline btn-sm" id="peAi" style="margin-top:8px">✨ Сгенерировать с AI</button>
+      </div>
+      <div class="fields">
+        <div class="field"><label>Рейтинг</label><input class="input" name="rating" type="number" step="0.1" min="0" max="5"></div>
+        <div class="field"><label>Отзывов</label><input class="input" name="reviews" type="number" min="0"></div>
+      </div>
+      <label class="check"><input type="checkbox" name="active"> Показывать на сайте</label>
+      <div class="modal-actions">
+        <button class="btn btn-dark">Сохранить</button>
+        <button type="button" class="btn btn-outline danger" id="peDelete">Удалить</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="/js/core.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

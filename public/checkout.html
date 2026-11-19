@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Оформление заказа — NovaTrend</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <a href="/" class="logo">Nova<b>Trend</b></a>
+    <div class="header-actions">
+      <a href="/#catalog" class="btn btn-outline btn-sm">← Продолжить покупки</a>
+    </div>
+  </div>
+</header>
+
+<main class="container" id="checkoutRoot">
+  <div class="page-title">
+    <div class="crumbs"><a href="/">Главная</a> / Оформление заказа</div>
+    <h1>Оформление заказа</h1>
+  </div>
+
+  <form class="checkout" id="orderForm" novalidate>
+    <div>
+      <div class="panel">
+        <h2><span class="num">1</span>Контакты</h2>
+        <div class="fields">
+          <div class="field full">
+            <label for="name">Имя <em>*</em></label>
+            <input class="input" id="name" name="name" autocomplete="name" placeholder="Как к вам обращаться" required>
+          </div>
+          <div class="field">
+            <label for="phone">Номер телефона</label>
+            <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" placeholder="Номер с кодом страны" inputmode="tel">
+          </div>
+          <div class="field">
+            <label for="whatsapp">WhatsApp</label>
+            <input class="input" id="whatsapp" name="whatsapp" type="tel" placeholder="Номер с кодом страны" inputmode="tel">
+            <label class="check"><input type="checkbox" id="sameWa"> Совпадает с телефоном</label>
+          </div>
+          <div class="field full">
+            <span class="hint">Укажите телефон или WhatsApp — хотя бы один номер обязателен.</span>
+          </div>
+          <div class="field full">
+            <label>Как с вами связаться?</label>
+            <div class="options">
+              <label class="opt"><input type="radio" name="contact" value="call" checked><span><b data-icon="phone">Звонок</b><small>Позвоним по телефону</small></span></label>
+              <label class="opt"><input type="radio" name="contact" value="whatsapp"><span><b data-icon="whatsapp">WhatsApp</b><small>Напишем в WhatsApp</small></span></label>
+              <label class="opt"><input type="radio" name="contact" value="telegram"><span><b data-icon="send">Telegram</b><small>Напишем по номеру</small></span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2><span class="num">2</span>Доставка</h2>
+        <div class="options two" style="margin-bottom:18px">
+          <label class="opt"><input type="radio" name="delivery" value="courier" checked><span><b data-icon="truck">Курьером</b><small id="courierNote"></small></span></label>
+          <label class="opt"><input type="radio" name="delivery" value="pickup"><span><b data-icon="store">Самовывоз</b><small id="pickupNote">Бесплатно</small></span></label>
+        </div>
+        <div id="addressBlock">
+          <div class="fields">
+            <div class="field">
+              <label for="city">Город</label>
+              <input class="input" id="city" name="city" autocomplete="address-level2" placeholder="Город">
+            </div>
+            <div class="field">
+              <label for="address">Улица, дом, квартира</label>
+              <input class="input" id="address" name="address" autocomplete="street-address" placeholder="ул. Ленина, 10, кв. 5">
+            </div>
+            <div class="field full">
+              <label>Местоположение</label>
+              <div class="geo">
+                <button type="button" class="btn btn-outline btn-sm" id="geoBtn" data-icon="locate">Отправить моё местоположение</button>
+                <span class="geo-status" id="geoStatus">Курьер получит точку на карте</span>
+              </div>
+              <div class="map" id="map"></div>
+            </div>
+          </div>
+        </div>
+        <div id="pickupBlock" hidden>
+          <p style="margin:0;display:flex;gap:10px;align-items:flex-start"><span data-icon="pin"></span><span>Адрес самовывоза: <b id="pickupAddr"></b><br><span class="hint">Мы свяжемся с вами, когда заказ будет готов.</span></span></p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2><span class="num">3</span>Оплата и комментарий</h2>
+        <div class="options two" style="margin-bottom:16px">
+          <label class="opt"><input type="radio" name="payment" value="cash" checked><span><b data-icon="cash">Наличными</b><small>При получении</small></span></label>
+          <label class="opt"><input type="radio" name="payment" value="card"><span><b data-icon="card">Картой</b><small>Курьеру при получении</small></span></label>
+        </div>
+        <div class="field">
+          <label for="comment">Комментарий к заказу</label>
+          <textarea class="input" id="comment" name="comment" placeholder="Подъезд, этаж, удобное время доставки…"></textarea>
+        </div>
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      </div>
+    </div>
+
+    <aside class="summary">
+      <div class="panel">
+        <h2>Ваш заказ</h2>
+        <div id="sumLines"></div>
+        <div class="totals" style="margin-top:16px">
+          <div><span>Товары</span><span id="sumSub"></span></div>
+          <div><span>Доставка</span><span id="sumShip"></span></div>
+          <div class="grand"><span>Итого</span><span id="sumTotal"></span></div>
+        </div>
+        <div class="form-error" id="formError"></div>
+        <button class="btn btn-accent btn-block" id="submitBtn" style="height:52px">Подтвердить заказ</button>
+        <p class="hint" style="text-align:center;margin:12px 0 0">Оплата при получении. Мы свяжемся с вами для подтверждения.</p>
+      </div>
+    </aside>
+  </form>
+</main>
+
+<script src="/js/core.js"></script>
+<script src="/js/checkout.js"></script>
+</body>
+</html>

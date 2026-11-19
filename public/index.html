@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NovaTrend — магазин одежды</title>
+  <meta name="description" content="Худи, футболки, куртки, джинсы, обувь и аксессуары. Доставка курьером и самовывоз, оплата при получении.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span data-icon="truck">Бесплатная доставка от <b data-free-from>$50</b></span>
+    <span data-icon="tag">Летняя распродажа — скидки до 30%</span>
+    <span data-icon="bolt">Оплата при получении</span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container">
+    <button class="icon-btn burger" id="burger" aria-label="Меню" data-icon="menu"></button>
+    <a href="/" class="logo">Nova<b>Trend</b></a>
+    <nav class="nav" id="nav">
+      <a href="#top" class="active">Главная</a>
+      <a href="#catalog">Каталог</a>
+      <a href="#new">Новинки</a>
+      <a href="#best">Хиты продаж</a>
+      <a href="#categories">Категории</a>
+      <a href="#about">О нас</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="searchToggle" aria-label="Поиск" data-icon="search"></button>
+      <button class="icon-btn hide-sm" id="favBtn" aria-label="Избранное" data-icon="heart"><span class="badge-count" data-fav-count></span></button>
+      <button class="icon-btn" data-open-cart aria-label="Корзина" data-icon="cart"><span class="badge-count" data-cart-count></span></button>
+    </div>
+  </div>
+  <div class="search-bar" id="searchBar">
+    <div class="container"><input type="search" id="searchInput" placeholder="Поиск: худи, джинсы, кроссовки…" autocomplete="off"></div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div>
+        <span class="eyebrow">Новая коллекция</span>
+        <h1>Одежда, которую хочется носить</h1>
+        <p class="lead">Базовые вещи и яркие акценты на каждый день. Привезём домой — примерьте и оплатите при получении.</p>
+        <div class="hero-cta">
+          <a href="#catalog" class="btn btn-accent">В каталог <span data-icon="arrow" data-icon-class="icon"></span></a>
+          <a href="#new" class="btn btn-outline">Смотреть новинки</a>
+        </div>
+        <div class="trust">
+          <div class="avatars">
+            <img src="https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=80&h=80&fit=crop&q=70" alt="">
+            <img src="https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=80&h=80&fit=crop&q=70" alt="">
+            <img src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=80&h=80&fit=crop&q=70" alt="">
+            <img src="https://images.unsplash.com/photo-1608063615781-e2ef8c73d114?w=80&h=80&fit=crop&q=70" alt="">
+          </div>
+          <span>Уже покупают у нас более 12 000 человек</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-blob"></div>
+        <img class="hero-model" src="https://images.unsplash.com/photo-1578587018452-892bacefd3f2?w=900&q=80&auto=format&fit=crop" alt="Девушка в оранжевом свитере">
+        <div id="floatCards"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <div class="row">
+        <div class="feature" data-icon="truck"><div><b>Быстрая доставка</b><small>Бесплатно от <span data-free-from>$50</span></small></div></div>
+        <div class="feature" data-icon="lock"><div><b>Оплата при получении</b><small>Наличными или картой</small></div></div>
+        <div class="feature" data-icon="refresh"><div><b>Лёгкий возврат</b><small>14 дней на обмен</small></div></div>
+        <div class="feature" data-icon="headset"><div><b>Поддержка</b><small>Ответим в WhatsApp и Telegram</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="section-head">
+        <h2>Категории</h2>
+        <a href="#catalog" class="link-more">Весь каталог <span data-icon="arrow"></span></a>
+      </div>
+      <div class="cats" id="cats"></div>
+    </div>
+  </section>
+
+  <!-- NEW ARRIVALS -->
+  <section class="section" id="new">
+    <div class="container">
+      <div class="section-head">
+        <h2>Новинки</h2>
+        <a href="#catalog" class="link-more" data-filter-link="new">Все новинки <span data-icon="arrow"></span></a>
+      </div>
+      <div class="slider">
+        <button class="slide-btn prev" data-slide="-1" aria-label="Назад" data-icon="left"></button>
+        <div class="track" id="newTrack"></div>
+        <button class="slide-btn next" data-slide="1" aria-label="Вперёд" data-icon="right"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEST SELLERS -->
+  <section class="section" id="best">
+    <div class="container">
+      <div class="section-head">
+        <h2>Хиты продаж</h2>
+        <a href="#catalog" class="link-more" data-filter-link="hit">Все хиты <span data-icon="arrow"></span></a>
+      </div>
+      <div class="best" id="bestGrid"></div>
+    </div>
+  </section>
+
+  <!-- PROMOS -->
+  <section class="section">
+    <div class="container promos">
+      <div class="promo promo-sale">
+        <small>Распродажа</small>
+        <h3>Скидки до 30%</h3>
+        <div class="countdown" id="countdown">
+          <div><b data-cd="d">00</b><span>дней</span></div><div class="sep">:</div>
+          <div><b data-cd="h">00</b><span>часов</span></div><div class="sep">:</div>
+          <div><b data-cd="m">00</b><span>минут</span></div><div class="sep">:</div>
+          <div><b data-cd="s">00</b><span>секунд</span></div>
+        </div>
+        <a href="#catalog" class="btn btn-white btn-sm" data-filter-link="sale">Смотреть скидки</a>
+        <img class="shoe" src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=700&q=80&auto=format&fit=crop" alt="">
+      </div>
+      <div class="promo promo-dark">
+        <img class="pic" src="https://images.unsplash.com/photo-1548624313-0396c75e4b1a?w=900&q=80&auto=format&fit=crop" alt="">
+        <small>Новая коллекция</small>
+        <h3>Сезон 2026</h3>
+        <p>Свежие цвета, свободный крой и вещи, которые легко сочетать.</p>
+        <a href="#new" class="btn btn-white btn-sm">Смотреть коллекцию</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATALOG -->
+  <section class="section" id="catalog">
+    <div class="container">
+      <div class="section-head">
+        <h2>Каталог</h2>
+        <span class="link-more" id="catCount"></span>
+      </div>
+      <div class="catalog-tools">
+        <div class="chips" id="chips"></div>
+        <select class="select" id="sort" aria-label="Сортировка">
+          <option value="pop">Сначала популярные</option>
+          <option value="new">Сначала новинки</option>
+          <option value="asc">Сначала дешёвые</option>
+          <option value="desc">Сначала дорогие</option>
+        </select>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container about">
+      <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1000&q=80&auto=format&fit=crop" alt="Наш магазин" loading="lazy">
+      <div>
+        <span class="eyebrow">О магазине</span>
+        <h2>Отбираем вещи, которые носим сами</h2>
+        <p>Мы небольшая команда и сами проверяем каждую модель: ткань, посадку, швы. В каталог попадает только то, что не стыдно надеть на следующий день и через год.</p>
+        <p>Заказ можно оформить за минуту: укажите адрес или просто отправьте геолокацию — курьер позвонит или напишет в WhatsApp перед приездом.</p>
+        <div class="stats">
+          <div><b>12 000+</b><small>покупателей</small></div>
+          <div><b>4.8</b><small>средняя оценка</small></div>
+          <div><b>1–2 дня</b><small>доставка</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES 2 -->
+  <section class="features boxed">
+    <div class="container">
+      <div class="row">
+        <div class="feature" data-icon="award"><div><b>Качество</b><small>Проверяем каждую вещь</small></div></div>
+        <div class="feature" data-icon="truck"><div><b>Доставка</b><small>Курьером до двери</small></div></div>
+        <div class="feature" data-icon="shield"><div><b>Без предоплаты</b><small>Платите при получении</small></div></div>
+        <div class="feature" data-icon="smile"><div><b>Довольные клиенты</b><small>Средняя оценка 4.8</small></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="contacts">
+  <div class="container">
+    <div class="cols">
+      <div>
+        <a href="/" class="logo">Nova<b>Trend</b></a>
+        <p style="margin-top:12px;max-width:280px">Магазин повседневной одежды, обуви и аксессуаров с доставкой.</p>
+      </div>
+      <div>
+        <h4>Покупателям</h4>
+        <ul>
+          <li><a href="#catalog">Каталог</a></li>
+          <li><a href="#new">Новинки</a></li>
+          <li><a href="#best">Хиты продаж</a></li>
+          <li><a href="/checkout.html">Корзина и оформление</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <ul>
+          <li><a id="footPhone" href="#"></a></li>
+          <li><a id="footWa" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li id="footAddr"></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Скидки и новинки</h4>
+        <p style="margin:0">Оставьте почту — пришлём подборку новинок раз в месяц.</p>
+        <form class="subscribe" id="subscribe">
+          <input type="email" placeholder="Ваш email" required aria-label="Email">
+          <button>OK</button>
+        </form>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© <span id="year"></span> NovaTrend. Все права защищены.</span>
+      <span>Фото: Unsplash</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart drawer -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="cartDrawer" aria-label="Корзина">
+  <div class="drawer-head">
+    <h3>Корзина</h3>
+    <button class="icon-btn" data-close-cart aria-label="Закрыть" data-icon="close"></button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot" hidden>
+    <div class="ship-progress" id="shipProgress"></div>
+    <div class="totals"><div class="grand"><span>Итого</span><span id="cartSubtotal"></span></div></div>
+    <a href="/checkout.html" class="btn btn-accent btn-block">Оформить заказ <span data-icon="arrow"></span></a>
+  </div>
+</aside>
+
+<!-- Product modal -->
+<div class="modal" id="productModal" role="dialog" aria-modal="true"><div class="modal-box"></div></div>
+
+<script src="/js/core.js"></script>
+<script src="/js/home.js"></script>
+</body>
+</html>
